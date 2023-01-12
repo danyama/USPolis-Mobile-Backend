@@ -10,11 +10,39 @@ generator client {
 model classrooms {
   id               String  @id @default(auto()) @map("_id") @db.ObjectId
   classroom_name   String
-  accessibility    Boolean @default(false)
-  air_conditioning Boolean @default(false)
-  projector        Boolean @default(false)
+  accessibility    Boolean
+  air_conditioning Boolean
+  projector        Boolean
   capacity         Int
   floor            Int
   created_by       String
   updated_at       String
+}
+
+type Preferences {
+  accessibility    Boolean?
+  air_conditioning Boolean?
+  building         String?
+  projector        Boolean?
+}
+
+model events {
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  class_code          String
+  subject_code        String
+  subject_name        String
+  week_day            String
+  class_type          String
+  start_period        String
+  end_period          String
+  start_time          String
+  end_time            String
+  has_to_be_allocated Boolean
+  pendings            Int
+  subscribers         Int
+  vacancies           Int
+  created_by          String
+  updated_at          String
+  preferences         Preferences?
+  professor           String?
 }
