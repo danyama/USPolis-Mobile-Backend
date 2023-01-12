@@ -1,0 +1,20 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Classroom {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  classroom_name   String
+  accessibility    Boolean  @default(false)
+  air_conditioning Boolean  @default(false)
+  projector        Boolean  @default(false)
+  capacity         Int
+  floor            Int
+  created_by       DateTime
+  updated_at       DateTime
+}
