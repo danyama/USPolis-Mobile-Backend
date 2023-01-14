@@ -10,6 +10,7 @@ generator client {
 model classrooms {
   id               String  @id @default(auto()) @map("_id") @db.ObjectId
   classroom_name   String
+  building         String
   accessibility    Boolean
   air_conditioning Boolean
   projector        Boolean
@@ -45,4 +46,6 @@ model events {
   updated_at          String
   preferences         Preferences?
   professor           String?
+  classroom           String?
+  building            String?
 }
