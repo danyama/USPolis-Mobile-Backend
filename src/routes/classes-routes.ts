@@ -49,7 +49,7 @@ classesRoute.get("/detail", async (req: Request, res: Response) => {
   const classDetail = {
     subjectName: classInfo?.[0]?.subject_name,
     subjectCode: classInfo?.[0]?.subject_code,
-    classCode: classInfo?.[0]?.class_code,
+    classCode: getAbbreviatedClassCode(classInfo?.[0]?.class_code),
     building: classInfo?.[0]?.building,
     professor: classInfo?.[0]?.professor,
     startPeriod: classInfo?.[0]?.start_period,
