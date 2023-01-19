@@ -13,6 +13,7 @@ classesRoute.get("", async (req: Request, res: Response) => {
   });
 
   const distinctClasses = allEvents.map((event: Event) => ({
+    id: event.id,
     subjectCode: event.subject_code,
     subjectName: event.subject_name,
     classCode: getAbbreviatedClassCode(event.class_code),
@@ -55,6 +56,7 @@ classesRoute.get("/detail", async (req: Request, res: Response) => {
     startPeriod: classInfo?.[0]?.start_period,
     endPeriod: classInfo?.[0]?.end_period,
     schedule: classInfo.map((event: Event) => ({
+      id: event?.id,
       weekDay: mapWeekDays(event?.week_day),
       startTime: event?.start_time,
       endTime: event?.end_time,
