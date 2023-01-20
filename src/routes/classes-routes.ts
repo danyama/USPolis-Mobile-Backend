@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
-import { mapWeekDays } from "../utils";
 
 export const classesRoute = Router();
 
