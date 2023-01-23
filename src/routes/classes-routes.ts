@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
+import { Schedule, ListedEvent } from "../types";
+import { getAbbreviatedClassCode, mapWeekDays } from "../utils";
 
 export const classesRoute = Router();
 
@@ -31,9 +33,22 @@ classesRoute.get("", async (req: Request, res: Response) => {
     },
   ];
 
-  const result = await prisma.events.aggregateRaw({
+  const results = await prisma.events.aggregateRaw({
     pipeline: aggregation,
   });
 
-  res.json(result);
+
+  const formattedResults = Array.isArray(results) && results.map((result: ListedEvent) => ({
+    ...result._id,
+    id: `${result._id.subject_code}_${result._id.class_code}`,
+    class_code: getAbbreviatedClassCode(result._id.class_code),
+    schedule: result.schedule.map((day: Schedule) => {
+      return {
+        ...day,
+        week_day: mapWeekDays(day.week_day)
+      }
+    })
+  }))
+
+  res.json(formattedResults);
 });
