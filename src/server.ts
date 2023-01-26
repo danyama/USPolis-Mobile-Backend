@@ -4,7 +4,7 @@ import { classesRoute } from "./routes/classes-routes";
 const app: Express = express();
 app.use(express.json());
 
-const port = 3000;
+const port = process.env.PORT;
 
 app.use("/classes", classesRoute);
 
