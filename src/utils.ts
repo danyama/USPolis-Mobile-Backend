@@ -32,8 +32,7 @@ const findFloor = async (prisma: PrismaClient, classroom_name: string, building:
   return result?.floor
 }
 
-export const mapResults = async (results: ListedEvent[]) => {
-  const prisma = new PrismaClient();
+export const mapResults = async (prisma: PrismaClient, results: ListedEvent[]) => {
   return Promise.all(results.map(async (result: ListedEvent) => ({
     ...result._id,
     id: `${result._id.subject_code}_${result._id.class_code}`,

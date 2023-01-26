@@ -36,7 +36,7 @@ classesRoute.get("", async (req: Request, res: Response) => {
     pipeline: aggregation,
   });
 
-  const formattedResults = Array.isArray(results) && await mapResults(results)
+  const formattedResults = Array.isArray(results) && await mapResults(prisma, results)
 
   res.json(formattedResults);
 });
