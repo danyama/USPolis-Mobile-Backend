@@ -49,3 +49,10 @@ model events {
   classroom           String?
   building            String?
 }
+
+model comments {
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  email               String?
+  comment             String
+  created_at          DateTime
+}
