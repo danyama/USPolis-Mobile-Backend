@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { ListedEvent, Schedule } from "./types";
 
+import MailService from '@sendgrid/mail'
+
 const getAbbreviatedClassCode = (classCode: string): string => {
   const abbreviatedClassCode = classCode.slice(-2);
 
@@ -45,4 +47,24 @@ export const mapResults = async (prisma: PrismaClient, results: ListedEvent[]) =
       }
     }))
   })))
+}
+
+export const sendEmail = async (email: string | undefined, comment: string) => {
+  const emailMessage = {
+    to: 'uspolis@usp.br',
+    from: 'uspolis@usp.br',
+    subject: 'Comentário no app USPolis',
+    html: `
+      <p>Email: ${email ?? "Não informado"}</p>
+      <p>Comentário: ${comment}</p>
+    `
+  }
+  try {
+    const apiKey = process.env.SENDGRID_API_KEY
+    MailService.setApiKey(apiKey!)
+    await MailService.send(emailMessage)
+    console.log("E-mail enviado com sucesso!");
+  } catch (err) {
+    console.log(`Erro no envio de email: ${err}`);
+  }
 }
