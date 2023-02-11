@@ -32,6 +32,16 @@ Uma possível forma de fazer isso:
 
 Sempre que houver alguma mudança no arquivo `schema.prisma`, é necessário atualizar os modelos rodando `npx prisma generate`
 
+## Deploy
+
+Na máquina da USP, rodar:
+
+1. `cd ~/USPolis-Mobile-Backend/`
+2. `git pull origin`
+3. `./start_uspolis_mobile_back.sh`
+
+O script de rodar o servidor termina o processo anterior na porta (versão anterior da aplicação) e levanta um novo build.
+
 ## Troubleshooting
 
 Um ponto em que pode haver algum problema é no servidor da USP (que tem pouco espaço, só 10 gigas de storage). Então, pode ser que o espaço seja completo e, com isso, os sistemas saiam do ar (como por exemplo o banco de dados).
