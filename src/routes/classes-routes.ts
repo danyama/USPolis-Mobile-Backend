@@ -1,12 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
 import { mapResults } from "../utils";
+import * as redis from 'redis'
 
 export const classesRoute = Router();
-
 const prisma = new PrismaClient();
 
-classesRoute.get("", async (req: Request, res: Response) => {
+let redisClient: redis.RedisClientType;
+
+(async () => {
+  redisClient = redis.createClient();
+
+  redisClient.on("error", (error: any) => console.error(`Error : ${error}`));
+
+  await redisClient.connect();
+})();
+
+const getClasses = async () => {
   const aggregation = [
     {
       $group: {
@@ -38,7 +48,22 @@ classesRoute.get("", async (req: Request, res: Response) => {
 
   const formattedResults = Array.isArray(results) && await mapResults(prisma, results)
 
-  res.json(formattedResults);
+  return formattedResults
+}
+
+classesRoute.get("", async (req: Request, res: Response) => {
+  const cacheResults = await redisClient.get('classes');
+
+  let results;
+
+  if (cacheResults) {
+    results = JSON.parse(cacheResults);
+  } else {
+    results = await getClasses();
+    await redisClient.setEx('classes', 60 * 60, JSON.stringify(results));
+  }
+
+  res.json(results);  
 });
 
 
