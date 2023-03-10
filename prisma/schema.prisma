@@ -16,7 +16,7 @@ model classrooms {
   projector        Boolean
   capacity         Int
   floor            Int
-  created_by       String
+  created_by       String?
   updated_at       String
 }
 
