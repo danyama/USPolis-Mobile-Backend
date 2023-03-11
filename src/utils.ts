@@ -1,8 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { ListedEvent, Schedule } from "./types";
 
-import { v4 as uuidv4 } from 'uuid';
-
 import MailService from '@sendgrid/mail'
 
 const getAbbreviatedClassCode = (classCode: string): string => {
@@ -39,7 +37,7 @@ const findFloor = async (prisma: PrismaClient, classroom_name: string, building:
 export const mapResults = async (prisma: PrismaClient, results: ListedEvent[]) => {
   return Promise.all(results.map(async (result: ListedEvent) => ({
     ...result._id,
-    id: uuidv4(),
+    id: `${result._id.subject_code}_${result._id.class_code}`,
     class_code: getAbbreviatedClassCode(result._id.class_code),
     schedule: await Promise.all(result.schedule.map(async (day: Schedule) => {
       return {
