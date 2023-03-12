@@ -27,6 +27,7 @@ const getClasses = async () => {
           professor: "$professor",
           start_period: "$start_period",
           end_period: "$end_period",
+          created_by: "$created_by"
         },
         schedule: {
           $push: {
