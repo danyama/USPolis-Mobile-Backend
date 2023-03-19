@@ -36,7 +36,7 @@ const findFloor = async (prisma: PrismaClient, classroom_name: string, building:
 
 export const mapResults = async (prisma: PrismaClient, results: ListedEvent[]) => {
   return Promise.all(results
-    .filter((element) => element._id.created_by === "amelia")
+    .filter((element) => element._id.created_by === "amelia" || element._id.created_by === "eletrica-manual")
     .sort((a, b) => a._id.subject_code.localeCompare(b._id.subject_code) || a._id.class_code.localeCompare(b._id.class_code))
     .map(async (result: ListedEvent) => ({
     ...result._id,
