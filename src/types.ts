@@ -10,7 +10,8 @@ interface ID {
   subject_name: string,
   start_period: string,
   end_period: string,
-  created_by: string
+  created_by: string,
+  is_active: boolean
 }
 
 export interface Schedule {

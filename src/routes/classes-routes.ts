@@ -19,6 +19,11 @@ let redisClient: redis.RedisClientType;
 const getClasses = async () => {
   const aggregation = [
     {
+        $match: {
+            is_active: true,
+        }
+    },
+    {
       $group: {
         _id: {
           class_code: "$class_code",
@@ -27,7 +32,8 @@ const getClasses = async () => {
           professor: "$professor",
           start_period: "$start_period",
           end_period: "$end_period",
-          created_by: "$created_by"
+          created_by: "$created_by",
+          is_active: "$is_active"
         },
         schedule: {
           $push: {
