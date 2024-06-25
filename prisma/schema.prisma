@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = "mongodb://vitor:segredo@localhost:27017/uspolis?authSource=admin"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -55,4 +55,12 @@ model comments {
   email               String?
   comment             String
   created_at          DateTime
+}
+
+model posts {
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  author              String
+  content             String
+  created_at           String
+  event_id            String
 }
