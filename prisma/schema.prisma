@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb://vitor:segredo@localhost:27017/uspolis?authSource=admin"
 }
 
 generator client {
